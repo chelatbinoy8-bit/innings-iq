@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INNINGS IQ | THE STRATEGIC EDGE</title>
+    
+    <!-- Favicon: A Neon-Lime Cricket Ball Icon for the Browser Tab -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23ccff00%22/><path d=%22M20 50 Q50 20 80 50 M20 60 Q50 30 80 60%22 fill=%22none%22 stroke=%22black%22 stroke-width=%223%22/></svg>">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -44,7 +48,7 @@
         }
 
         nav {
-            height: 70px;
+            height: 80px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -56,21 +60,26 @@
             z-index: 100;
         }
 
-        .logo {
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo-mark {
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+
+        .logo-text {
             font-family: var(--mono);
             font-weight: 700;
             letter-spacing: -1px;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-icon {
-            width: 12px;
-            height: 12px;
-            background: var(--accent);
-            border-radius: 50%; /* Represents the ball/point of data */
+            font-size: 1.25rem;
+            text-transform: uppercase;
         }
 
         .system-time {
@@ -237,7 +246,18 @@
 <body>
 
     <nav>
-        <div class="logo"><div class="logo-icon"></div> INNINGS<span style="color:var(--accent)">IQ</span></div>
+        <a href="#" class="logo-container">
+            <div class="logo-mark">
+                <!-- SVG Logo: Represents an IQ brain formed by cricket ball seam lines -->
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" stroke="var(--accent)" stroke-width="4"/>
+                    <path d="M30 50C30 30 70 30 70 50C70 70 30 70 30 50Z" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 4"/>
+                    <path d="M50 2L50 98" stroke="var(--accent)" stroke-width="1" opacity="0.3"/>
+                    <circle cx="50" cy="50" r="10" fill="var(--accent)"/>
+                </svg>
+            </div>
+            <div class="logo-text">INNINGS<span style="color:var(--accent)">IQ</span></div>
+        </a>
         <div class="system-time" id="clock">LIVE_MATCH_TRACKER: 00:00:00</div>
     </nav>
 
