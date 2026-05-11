@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INNINGS IQ | SECURE GATEWAY</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23ccff00%22/><path d=%22M20 50 Q50 20 80 50 M20 60 Q50 30 80 60%22 fill=%22none%22 stroke=%22black%22 stroke-width=%223%22/></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050505;
+            --accent: #ccff00;
+            --surface: #0a0a0a;
+            --border: #1a1a1a;
+            --text: #ffffff;
+            --text-dim: #444444;
+            --error: #ff4444;
+            --mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .gateway-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 4rem 3rem;
+            position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
+        }
+
+        .gateway-card::after {
+            content: "";
+            position: absolute;
+            top: -1px; right: -1px; width: 40px; height: 40px;
+            background: linear-gradient(45deg, transparent 50%, var(--accent) 50%);
+        }
+
+        .header {
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        .header h1 {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: var(--text);
+            font-size: 1.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+            background: #000;
+            border-bottom: 2px solid var(--border);
+            transition: 0.3s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent);
+        }
+
+        .input-wrapper label {
+            position: absolute;
+            top: 10px; left: 15px;
+            font-family: var(--mono);
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 24px 15px 10px 15px;
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .btn-authorize {
+            width: 100%;
+            padding: 1.25rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            font-family: var(--mono);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 1rem;
+            clip-path: polygon(0 0, 100% 0, 100% 70%, 94% 100%, 0 100%);
+        }
+
+        .system-specs {
+            margin-top: 3rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .spec-item {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .spec-val {
+            color: #888;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Stealth Loader */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glitch-text {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gateway-card">
+        <div class="header">
+            <h1>Authorization_Required</h1>
+            <p>Enter Command Center</p>
+        </div>
+
+        <div class="form-group">
+            <div class="input-wrapper">
+                <label>Analyst_ID</label>
+                <input type="text" id="username" spellcheck="false" autocomplete="off">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-wrapper">
+                <label>Access_Passkey</label>
+                <input type="password" id="passcode">
+            </div>
+        </div>
+
+        <button class="btn-authorize" onclick="startAuth()">Initialize Session</button>
+
+        <div class="system-specs">
+            <div class="spec-item">
+                Architecture
+                <span class="spec-val">Edge_Distributed</span>
+            </div>
+            <div class="spec-item">
+                Security_Level
+                <span class="spec-val">Private_Vault</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="loader">
+        <div class="glitch-text" id="l-text">DECRYPTING...</div>
+    </div>
+
+    <script>
+        window.onload = () => {
+            const user = localStorage.getItem('iq_user');
+            if (user) document.getElementById('username').value = user;
+        };
+
+        function startAuth() {
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('passcode').value;
+
+            if (!user || pass.length < 4) return;
+
+            localStorage.setItem('iq_user', user);
+            localStorage.setItem('iq_session_active', 'true');
+
+            const overlay = document.getElementById('loader');
+            const txt = document.getElementById('l-text');
+            overlay.style.display = 'flex';
+
+            const steps = ["ISOLATING_NODE...", "VERIFYING_HASH...", "ENTERING_IQ_CORE..."];
+            let i = 0;
+            
+            const timer = setInterval(() => {
+                txt.innerText = steps[i];
+                i++;
+                if (i >= steps.length) {
+                    clearInterval(timer);
+                    window.location.href = 'dashboard.html';
+                }
+            }, 800);
+        }
+    </script>
+</body>
+</html>
